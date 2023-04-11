@@ -128,6 +128,17 @@ function logger2<T extends LengthWise>(val: T) {
 logger2('zhufeng');
 logger2(1);// 装箱后没有length属性，所以会报错
 ```
+
+7.5 泛型接口
+泛型接口可以用来约束函数
+interface Calculate{
+  <T>(a:T,b:T):T
+}
+let add:Calculate = function<T>(a:T,b:T){
+  return a;
+}
+add<number>(1,2);
+
 ## 泛型 + 重载（overload）
 https://github.com/reduxjs/redux/blob/c21ac204e8ef1d6d428ee3b906b3646c73aa9441/src/compose.ts
 
@@ -178,3 +189,30 @@ let f:Fish;
 f = new Animal(); // 报错
 ```
 ## 函数的兼容性
+
+# 交叉类型(满足双方条件,即约束更多、缩小范围)
+```ts
+type AA = string|number
+type BB = string|boolean
+type CC = AA&BB //string
+```
+
+# unknown
+unknown是any的安全类型
+如果想调用unknown上的方法和属性，需要缩小类型：
+1. xxx as xxx
+2. typeof
+可以比较 ==，但是不可以+-操作
+
+## 联合类型中unknown
+会“吸收“其他类型，如
+```ts
+type a1 = unknown | null // unknown
+type a2 = unknown | string // string
+```
+## 交叉类型中unknown
+会“吸收“其他类型，如
+```ts
+type a1 = unknown | null // unknown
+type a2 = unknown | string // string
+```
